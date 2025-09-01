@@ -198,7 +198,6 @@ def start():
     names, rolls, times, l = extract_attendance()
     return render_template('home.html', names=names, rolls=rolls, times=times, l=l, totalreg=totalreg(), datetoday2=datetoday2)
 
-# Add a new user
 @app.route('/add', methods=['GET', 'POST'])
 def add():
     newusername = request.form['newusername']
@@ -209,7 +208,9 @@ def add():
     i, j = 0, 0
     cap = cv2.VideoCapture(0)
     while 1:
-        frame = cap.read()
+        ret, frame = cap.read()  # <-- FIXED LINE
+        if not ret:
+            break
         faces = extract_faces(frame)
         for (x, y, w, h) in faces:
             cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 20), 2)
@@ -231,7 +232,6 @@ def add():
     train_model()
     names, rolls, times, l = extract_attendance()
     return render_template('home.html', names=names, rolls=rolls, times=times, l=l, totalreg=totalreg(), datetoday2=datetoday2)
-
 # Run the Flask App
 if __name__ == '__main__':
     app.run(debug=True)
