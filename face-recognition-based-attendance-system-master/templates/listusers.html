@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Registered Users</h1>
+<p>Total Users: {{ totalreg }}</p>
+
+{% if l > 0 %}
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Roll No</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in range(l) %}
+                <tr>
+                    <td>{{ names[i] }}</td>
+                    <td>{{ rolls[i] }}</td>
+                    <td>
+                        <a href="/deleteuser?user={{ userlist[i] }}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No users registered yet.</p>
+{% endif %}
+{% endblock %}

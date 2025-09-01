@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center">
+    <h1>Face Recognition Attendance</h1>
+    <p>Date: {{ datetoday2 }}</p>
+    
+    {% if mess %}
+        <div class="alert alert-warning">{{ mess }}</div>
+    {% endif %}
+
+    <a href="/start" class="btn btn-primary">Start Attendance</a>
+
+    <h2 class="mt-4">Today's Attendance</h2>
+    {% if l > 0 %}
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Roll No</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in range(l) %}
+                    <tr>
+                        <td>{{ names[i] }}</td>
+                        <td>{{ rolls[i] }}</td>
+                        <td>{{ times[i] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No attendance records yet.</p>
+    {% endif %}
+</div>
+
+<h2 class="mt-5">Register New User</h2>
+<form action="/add" method="POST">
+    <div class="mb-3">
+        <label for="newusername" class="form-label">Name</label>
+        <input type="text" class="form-control" name="newusername" required>
+    </div>
+    <div class="mb-3">
+        <label for="newuserid" class="form-label">Roll Number</label>
+        <input type="text" class="form-control" name="newuserid" required>
+    </div>
+    <button type="submit" class="btn btn-success">Add User</button>
+</form>
+{% endblock %}
